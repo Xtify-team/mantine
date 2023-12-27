@@ -1,9 +1,9 @@
 name: Pull request workflow
 
 on:
-  pull_request:
+  push:
     branches:
-      - '**'
+      - 'master'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
@@ -25,5 +25,7 @@ jobs:
         run: npm run setup
       - name: Build public packages
         run: npm run build all
+      - name: relase 
+        run: npm run release:major
       - name: Run syncpack, eslint, tsc and jest
         run: npm test
